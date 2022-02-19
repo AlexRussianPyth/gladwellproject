@@ -1,0 +1,19 @@
+{% extends 'timerecord/base.html' %}
+
+{% block title %}
+Главный Дашборд
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-success alert-dismissible fade show" role="alert" >
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <strong>Success!</strong>
+    Bootstrap 5 is now installed
+</div>
+<p>Content Here!</p>
+{% if all_objects %}
+    {% for obj in all_objects %}
+        <p>Goal Name: {{obj.name}} Goal Description: {{obj.description}}</p>
+    {% endfor %}
+{% endif %}
+{% endblock %}
