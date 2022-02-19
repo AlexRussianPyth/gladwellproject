@@ -1,0 +1,61 @@
+{% extends 'timerecord/base.html' %}
+{% block title %} {% endblock %}
+
+{% block content %}
+<p>Внесите новую цель</p>
+<!-- <div class="shadow p-3 mb-5 bg-body rounded">Regular shadow</div> -->
+<div class="container shadow bg-body rounded">
+
+    <!-- <div class="text-center display-5">Добавьте новую цель</div> -->
+    <div class="h2 text-end">Добавьте новую цель</div>
+
+<form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">{{form.name.label}}</label>
+        <div class="form-control-lg">{{form.name}}</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">{{form.description.label}}</label>
+        <div class="form-control">{{form.description}}</div>
+        <div id="passwordHelpBlock" class="form-text">
+            Описание цели должно включать яркий образ будущего, а еще проблемы, которые могут возникнуть на пути
+          </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">{{form.target_hours.label}}</label>
+        <div class="form-control">{{form.target_hours}}</div>
+        <div id="hoursHelpBlock" class="form-text">
+            Время, которое вы запланировали потратить на достижение цели
+          </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">{{form.rating.label}}</label>
+        <div class="form-control">{{form.rating}}</div>
+        <div class="form-text">
+            Насколько важна для вас эта цель от 1 до 10?
+          </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">{{form.image.label}}</label>
+        <div class="form-control">{{form.image}}</div>
+        <div class="form-text">
+            Изображение цели
+          </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Новая Цель</button>
+
+</form>
+
+</div>
+
+
+
+
+{% endblock %}
+
