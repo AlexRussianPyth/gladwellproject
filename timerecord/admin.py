@@ -11,7 +11,9 @@ from .models import Goal, Category
 class CategoryInline(admin.StackedInline):
     model = Category
     fields = ('title', 'description', 'color')
-    max_num = 4
+
+    def get_extra(self, request, obj=None, **kwargs):
+        return 1
 
 
 class GoalAdmin(admin.ModelAdmin):
