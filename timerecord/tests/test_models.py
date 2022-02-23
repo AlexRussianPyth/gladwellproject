@@ -5,9 +5,10 @@ from timerecord.models import Goal
 
 class GoalTests(TestCase):
 
-    def setUp(self):
-        self.goal_model_a = Goal.objects.create(name="New Goal", target_hours=5, rating=5)
-        self.goal_model_b = Goal.objects.create(name="New Goal1", target_hours=5, rating=5)
+    @classmethod
+    def setUpTestData(cls):
+        cls.goal_model_a = Goal.objects.create(name="New Goal", target_hours=5, rating=5)
+        cls.goal_model_b = Goal.objects.create(name="New Goal1", target_hours=5, rating=5)
         # TODO Unhardcode this with Faker and random mumber of models
     
     def test_goal_creating(self):
