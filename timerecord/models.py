@@ -19,3 +19,27 @@ class Goal(models.Model):
 
     def __str__(self):
         return f"Goal: {self.name}, comment: {self.description[:20]}, rating: {self.rating}"
+
+class Category(models.Model):
+    RGB_COLORS_FOR_CATEGORY = [
+        ('Blue', '66, 135, 245'),
+        ('Red', '181, 0, 36'),
+        ('Green', '0, 143, 12'),
+        ('Orange', '194, 101, 2')
+    ]
+
+
+    title = models.CharField(max_length=30, verbose_name="Категория")
+    description = models.TextField(verbose_name="Описание категории")
+    color = models.CharField(max_length=10, choices=RGB_COLORS_FOR_CATEGORY, default="Red")
+    created_at = models.DateTimeField(auto_now_add=True)
+    goal = models.ForeignKey(Goal, on_delete=models.CASCADE, null=False, related_name='categories')
+
+    def __str__(self):
+        return f"{self.title} category for {self.goal.name}"
+    
+    def get_absolute_url(self):
+        pass
+
+
+class 
