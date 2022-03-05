@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import Goal
 from .forms import GoalForm
 from .utils import handle_uploaded_file
-from django.http import HttpResponse, HttpResponseRedirect 
+from django.http import HttpResponse, HttpResponseRedirect
 # Create your views here.
 
 def homepage_view(request):
@@ -33,3 +33,13 @@ def set_goal_view(request):
             raise Exception("Форма невалидна")
      
     return render(request, 'timerecord/setgoal.html', context)
+
+def goal_detail_view(request, slug):
+
+    goal_object = get_object_or_404(Goal, slug=slug)
+    context = {
+        "object" : goal_object
+    }
+
+    return render(request, 'timerecord/goal-detail.html', context)
+
