@@ -1,21 +1,33 @@
 {% extends 'timerecord/base.html' %}
+{% load static %}
 
 {% block title %}
 Главный Дашборд
 {% endblock %}
 
 {% block content %}
-<div class="alert alert-success alert-dismissible fade show" role="alert" >
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    <strong>Success!</strong>
-    Bootstrap 5 is now installed
+<div class="container-md">
+{% include 'timerecord/navigation.html' %}
+
+<h1>Мои цели</h1>
+
+    <div class="row">
+        
+        
+        {% if all_objects %}
+            {% for obj in all_objects %}
+            <div class="col gy-2 gx-3">
+                <p>Goal Name: {{obj.name}} Goal Description: {{obj.description}}</p>
+                <a href="{{ obj.get_absolute_url }}">Открыть цель {{obj.name}}</a>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+
+    </div>
+
+    {% include 'timerecord/footer.html' %}
+
 </div>
 
-<p>Content Here!</p>
-{% if all_objects %}
-    {% for obj in all_objects %}
-        <p>Goal Name: {{obj.name}} Goal Description: {{obj.description}}</p>
-        <a href="{{ obj.get_absolute_url }}">Открыть цель {{obj.name}}</a>
-    {% endfor %}
-{% endif %}
 {% endblock %}

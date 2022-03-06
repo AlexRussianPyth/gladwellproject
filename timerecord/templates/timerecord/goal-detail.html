@@ -2,12 +2,14 @@
 {% block title %} Цель {{ goal_object.name }} {% endblock %}
 
 {% block content %}
+{% include 'timerecord/navigation.html' %}
 
 <div class="container-sm bg-info">
 
 <div class="text-end display-2">Цель: {{goal_object.name}}</div>
 
 <div>{{ goal_object.created_at|date:"d.M.Y" }}</div>
+<div>{{ goal_object.my_function_field }}</div>
 
 </div>
 

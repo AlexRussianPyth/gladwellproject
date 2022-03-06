@@ -6,7 +6,7 @@ from django.urls import reverse
 # Create your models here.
 
 class Goal(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название цели", null=False, blank=False)
+    name = models.CharField(max_length=100, verbose_name="Название цели", null=False, blank=False, unique=True)
     slug = models.SlugField(blank=True, null=True)
     description = models.TextField(verbose_name="Описание цели")
     target_hours = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10000)], verbose_name="Часов необходимо")
@@ -14,6 +14,12 @@ class Goal(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_achieved = models.BooleanField(default=False, verbose_name="Achieved?")
     image = models.ImageField(upload_to="images/%Y/%m/%d/", verbose_name="Изображение цели", null=True)
+
+    def my_function_field(self):
+        if self.target_hours <= 15:
+            return "Small Goal"
+        else:
+            return "Long Goal"
 
     def save(self, *args, **kwargs):
         if self.slug is None:

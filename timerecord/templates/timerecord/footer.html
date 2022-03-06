@@ -1,5 +1,6 @@
 
-
-
-<div><a href="{% url 'timerecord:homepage' %}">Главный Дашборд</a></div>
-<div><a href="{% url 'timerecord:set-goal' %}">Постановка целей</a></div>
+<div class="d-grid gap-2">
+    <a href="{% url 'timerecord:set-goal' %}" class="text-end">
+<button type="button" class="btn-lg btn-outline-danger">Поставить цель</button>
+</a>
+</div>
