@@ -1,9 +1,15 @@
 {% extends 'timerecord/base.html' %}
-{% block title %} Цель {{ object.name }} {% endblock %}
+{% block title %} Цель {{ goal_object.name }} {% endblock %}
 
 {% block content %}
 
-<p>Страница для цели {{ object.description }} </p>
+<div class="container-sm bg-info">
+
+<div class="text-end display-2">Цель: {{goal_object.name}}</div>
+
+<div>{{ goal_object.created_at|date:"d.M.Y" }}</div>
+
+</div>
 
 {% endblock %}
 

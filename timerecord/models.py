@@ -24,7 +24,7 @@ class Goal(models.Model):
         return reverse('timerecord:goal-detail', kwargs={'slug':self.slug})
 
     def __str__(self):
-        return f"Goal: {self.name}, comment: {self.description[:20]}, rating: {self.rating}"
+        return f"Goal: {self.name} with rating: {self.rating}"
 
 class Category(models.Model):
     RGB_COLORS_FOR_CATEGORY = [
@@ -33,7 +33,6 @@ class Category(models.Model):
         ('Green', '0, 143, 12'),
         ('Orange', '194, 101, 2')
     ]
-
 
     title = models.CharField(max_length=30, verbose_name="Категория")
     description = models.TextField(verbose_name="Описание категории")

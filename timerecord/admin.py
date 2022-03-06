@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import Goal, Category
 
-# Register your models here.
-
 # class CategoryAdmin(admin.ModelAdmin):
 
 #     list_filter = ('title', 'description', 'color', 'goal')
@@ -17,6 +15,9 @@ class CategoryInline(admin.StackedInline):
 
 
 class GoalAdmin(admin.ModelAdmin):
+    list_display = ['name', 'target_hours']
+    list_display_links = ['name']
+    search_fields = ['name']
     inlines = [CategoryInline]
 
 admin.site.register(Goal, GoalAdmin)

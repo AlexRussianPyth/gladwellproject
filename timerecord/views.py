@@ -3,6 +3,7 @@ from .models import Goal
 from .forms import GoalForm
 from .utils import handle_uploaded_file
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic.edit import CreateView
 # Create your views here.
 
 def homepage_view(request):
@@ -38,8 +39,14 @@ def goal_detail_view(request, slug):
 
     goal_object = get_object_or_404(Goal, slug=slug)
     context = {
-        "object" : goal_object
+        "goal_object" : goal_object
     }
 
     return render(request, 'timerecord/goal-detail.html', context)
+
+class GoalCreateView(CreateView):
+    # template_name = 'timerecord/create.html'
+    model = Goal
+    fields = '__all__'
+    # success_url = ''
 
