@@ -1,9 +1,27 @@
 from django.db import models
+from django.db.models import Q
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.urls import reverse
 
+
 # Create your models here.
+
+class GoalQuerySet(models.QuerySet):
+    def search(self, query=None):
+        if query is None or query == "":
+            return self.get_queryset().none()
+        
+        lookups = Q(name__icontains=query) | Q(description__icontains=query)
+        return self.filter(lookups)
+
+class GoalManager(models.Manager):
+
+    def get_queryset(self):
+        return GoalQuerySet(self.model, using=self._db)
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
 
 class Goal(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название цели", null=False, blank=False, unique=True)
@@ -13,7 +31,7 @@ class Goal(models.Model):
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], verbose_name="Значимость")
     created_at = models.DateTimeField(auto_now_add=True)
     is_achieved = models.BooleanField(default=False, verbose_name="Achieved?")
-    image = models.ImageField(upload_to="images/%Y/%m/%d/", verbose_name="Изображение цели", null=True)
+    image = models.ImageField(upload_to="%Y/%m/%d/", verbose_name="Изображение цели", null=True, blank=True)
 
     def my_function_field(self):
         if self.target_hours <= 15:

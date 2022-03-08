@@ -16,6 +16,10 @@ def homepage_view(request):
 
     return render(request, 'timerecord/homepage.html', context)
 
+
+# def goal_search(request):
+    # qs = Article.objects.search(query)
+
 def set_goal_view(request):
 
     form = GoalForm()
