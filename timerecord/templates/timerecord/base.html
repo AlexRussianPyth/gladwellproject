@@ -9,6 +9,11 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <div>
+        {{ request.user }} 
+        <a href="{% url 'accounts:user-login' %}"><button>Логин</button></a>
+        <a href="{% url 'accounts:user-logout' %}"><button>Выйти</button></a> 
+    </div>
     {% block navigation %}
     {% endblock %}
 

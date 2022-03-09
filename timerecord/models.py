@@ -3,9 +3,10 @@ from django.db.models import Q
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
-# Create your models here.
 
 class GoalQuerySet(models.QuerySet):
     def search(self, query=None):
@@ -24,6 +25,8 @@ class GoalManager(models.Manager):
         return self.get_queryset().search(query=query)
 
 class Goal(models.Model):
+    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE, null=True)
+    
     name = models.CharField(max_length=100, verbose_name="Название цели", null=False, blank=False, unique=True)
     slug = models.SlugField(blank=True, null=True)
     description = models.TextField(verbose_name="Описание цели")

@@ -4,8 +4,11 @@ from .forms import GoalForm
 from .utils import handle_uploaded_file
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import CreateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
+# @login_required
 def homepage_view(request):
 
     all_objects = Goal.objects.all()
@@ -53,4 +56,5 @@ class GoalCreateView(CreateView):
     model = Goal
     fields = '__all__'
     # success_url = ''
+
 

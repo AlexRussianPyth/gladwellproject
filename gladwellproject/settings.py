@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'timerecord'
+    'timerecord',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -116,3 +117,5 @@ MEDIA_URL = "/user-media/"
 
 STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "static/"
+
+LOGIN_URL = "accounts/login/"
