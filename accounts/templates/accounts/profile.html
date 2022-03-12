@@ -1,0 +1,17 @@
+{% extends 'timerecord/base.html' %}
+{% block title %}Profile Page{% endblock %}
+
+{% block content %}
+<div>
+<p>Profile Page</p>
+
+
+<div class="h3">Top-3 Goals</div>
+{% for goal in goals %}
+<p>{{goal.name}}</p>
+{% endfor %}
+
+</div>
+
+
+{% endblock %}

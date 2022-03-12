@@ -8,14 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 # Create your views here.
 
-# @login_required
 def homepage_view(request):
+    context = {}
 
-    all_objects = Goal.objects.all()
+    if request.user.is_authenticated:
+        user_goals = Goal.objects.filter(user=request.user)
+        context['all_objects'] = user_goals
+    else:
+        context['message'] = "Here could be your goals!"
 
-    context = {
-        "all_objects" : all_objects
-    }
 
     return render(request, 'timerecord/homepage.html', context)
 

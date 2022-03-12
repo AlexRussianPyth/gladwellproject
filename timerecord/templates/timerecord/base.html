@@ -11,9 +11,17 @@
 <body>
     <div>
         {{ request.user }} 
-        <a href="{% url 'accounts:user-login' %}"><button>Логин</button></a>
-        <a href="{% url 'accounts:user-logout' %}"><button>Выйти</button></a> 
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'accounts:profile' username=request.user.username %}"><button>My Profile</button></a>
+        {% endif %}
+        <a href="{% url 'accounts:login' %}"><button>Login</button></a>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'accounts:logout' %}"><button>Logout</button></a>
+        {% endif %} 
+
     </div>
+
     {% block navigation %}
     {% endblock %}
 
@@ -23,7 +31,6 @@
     {% block footer %}
     {% endblock %}
 
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

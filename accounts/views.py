@@ -2,19 +2,19 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from timerecord.models import Goal
 
-
-# Create your views here.
 
 def register_view(request):
     form = UserCreationForm(request.POST or None)
     if form.is_valid():
         form.save()
-        return redirect("accounts:user-login")
+        return redirect("accounts:login")
     return render(request, "accounts/register.html", {"form" : form})
 
-def login_view(request):
 
+def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -35,3 +35,16 @@ def logout_view(request):
     logout(request)
     return redirect(request.META.get('HTTP_REFERER'))
     # Redirect to a success page.
+
+
+def profile_view(request, username):
+    current_user = request.user
+
+    if current_user.is_authenticated:
+        goals = Goal.objects.all()
+        context = {
+            "goals" : goals
+        }
+        return render(request, "accounts/profile.html", context)
+    print("User не залогирован")
+    return redirect("accounts:login")
