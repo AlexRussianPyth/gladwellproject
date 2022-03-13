@@ -1,0 +1,25 @@
+{
+  "name": "gladwell_npm",
+  "version": "1.0.0",
+  "description": "NPM modules for construction of this project.",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "sass --watch scss:assets/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexRussianPyth/gladwellproject.git"
+  },
+  "author": "Alex Kleschov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexRussianPyth/gladwellproject/issues"
+  },
+  "homepage": "https://github.com/AlexRussianPyth/gladwellproject#readme",
+  "devDependencies": {
+    "sass": "^1.49.9"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}
