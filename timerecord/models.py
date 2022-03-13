@@ -1,4 +1,5 @@
 from django.db import models
+from colorfield.fields import ColorField
 from django.db.models import Q
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
@@ -54,16 +55,19 @@ class Goal(models.Model):
         return f"Goal: {self.name} with rating: {self.rating}"
 
 class Category(models.Model):
-    RGB_COLORS_FOR_CATEGORY = [
-        ('Blue', '66, 135, 245'),
-        ('Red', '181, 0, 36'),
-        ('Green', '0, 143, 12'),
-        ('Orange', '194, 101, 2')
+    """
+    This model uses for assigning a category (part of the goal).
+    hex_color: . Samples (color_palette) don't restrict user, just add some useful colors.
+    """
+
+    COLOR_PALETTE = [
+        ('#FFFFFF', 'white', ),
+        ('#000000', 'black', ),
     ]
 
     title = models.CharField(max_length=30, verbose_name="Категория")
     description = models.TextField(verbose_name="Описание категории")
-    color = models.CharField(max_length=10, choices=RGB_COLORS_FOR_CATEGORY, default="Red")
+    color = ColorField(format='hex', default='#006CFF', samples=COLOR_PALETTE)
     created_at = models.DateTimeField(auto_now_add=True)
     goal = models.ForeignKey(Goal, on_delete=models.CASCADE, null=False)
 
