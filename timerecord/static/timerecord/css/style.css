@@ -11118,5 +11118,24 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.top-menu {
+  background: linear-gradient(to right, rgba(137, 15, 13, 0.95), rgba(217, 206, 63, 0.95));
+}
+.top-menu .navbar-brand {
+  color: white;
+}
+.top-menu ul li a {
+  color: white;
+  font-weight: 600;
+}
+.top-menu ul li {
+  padding: 0 1.2rem;
+}
+.top-menu a {
+  padding: 0 0.5rem;
+}
+.top-menu a button {
+  font-weight: 600;
+}
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,28 @@
+@use '../custom' as custom;
+@use '../components/mixins' as mixins;
+
+.top-menu {
+    @include mixins.gradient;
+    
+    .navbar-brand {
+        color: white;
+    }
+
+    ul li a {
+        color: white;
+        font-weight: 600;
+    }
+
+    ul li {
+        padding: 0 1.2rem;
+    }
+
+    a {
+        padding: 0 0.5rem
+    }
+    
+    a button {
+        font-weight: 600;
+    }
+
+}

@@ -1,2 +1,4 @@
-@use 'bs';
+@use 'custom';
 
+@use 'components/mixins';
+@use 'sections/navigation';
