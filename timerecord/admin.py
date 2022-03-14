@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Goal, Category
+from .models import Goal, Category, TimeRecord
 
 # class CategoryAdmin(admin.ModelAdmin):
 
@@ -21,4 +21,5 @@ class GoalAdmin(admin.ModelAdmin):
     inlines = [CategoryInline]
 
 admin.site.register(Goal, GoalAdmin)
+admin.site.register(TimeRecord)
 # admin.site.register(Category, CategoryInline)

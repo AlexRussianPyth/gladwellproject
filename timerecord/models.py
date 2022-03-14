@@ -76,9 +76,18 @@ class Category(models.Model):
     
     def get_absolute_url(self):
         pass
+    
+    def get_timerecords(self):
+        return self.timerecord_set.all()
 
+    def add_timerecord(self, minutes):
+        TimeRecord(category=self, time_added=minutes).save()
+        return None
 
 class TimeRecord(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
     time_added = models.IntegerField(verbose_name="Времени добавлено", validators=[MinValueValidator(1)])
     date = models.DateField(verbose_name="Дата активности", auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=False)
+
+    def __str__(self):
+        return f"Время для:{self.category} добавлено {self.time_added} {self.date}"

@@ -6,5 +6,4 @@ def handle_uploaded_file(file):
         for chunk in file.chunks():
             destination.write(chunk)
 
-
 # TODO Функция, которая получает лучшие по рейтингу цели

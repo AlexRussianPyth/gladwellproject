@@ -1,19 +1,57 @@
-{% extends 'timerecord/base.html' %}
-{% block title %} Цель {{ goal_object.name }} {% endblock %}
+{% extends 'timerecord/base.html' %} {% block title %} Цель: {{ goal_object.name
+}} {% endblock %} {% block content %}
 
-{% block content %}
-{% include 'timerecord/navigation.html' %}
+<!-- Goal Preview -->
+<div id="goal-preview" class="container-fluid bg-info mt-4 shadow">
+  <div class="row pt-4">
+    <div class="col-lg-6">
+      <h2 class="text-start display-2 fst-italic text-white">
+        {{goal_object.name}}
+      </h2>
+      <p class="text-white fw-bold">
+        {{ goal_object.created_at|date:"d.M.Y" }}
+        <span class="badge bg-primary text-white">{{ goal_object.my_function_field }}</span>
+      </p>
+    </div>
+    <div class="col-lg-6">
+      <img src="{{ goal_object.image.url }}" class="img-fluid rounded" alt="{{goal.name}}"/>
+    </div>
+  </div>
+</div>
 
-<div class="container-sm bg-info">
+<!-- Category Cards -->
+<div class="container">
+  <p>{{record.0}}</p>
+    {% for timerecord in record.1 %}
+  <p>{{timerecord}}</p>
+    {% endfor %}
 
-<div class="text-end display-2">Цель: {{goal_object.name}}</div>
+  <p></p>
+</div>
 
-<div>{{ goal_object.created_at|date:"d.M.Y" }}</div>
-<div>{{ goal_object.my_function_field }}</div>
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for object in timerecords %}
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{object.0.title}}</h5>
+          <p class="card-text">
+              {% for timerecord in object.1 %}
+                {{timerecord}}<br>
+              {% endfor %}
+          </p>
+        </div>
+        <form action="{% url 'timerecord:add-time' category_id=object.0.pk %}" method="POST"> {% csrf_token %}
+            <input type="number" name="time_added">
+            <button type="submit">Добавить</button>
+      </form>
+      </div>
+    </div>
+
+   
+    {% endfor %}
+
 
 </div>
 
-{% endblock %}
-
-
-{% include 'timerecord/footer.html' %}
+{% endblock %} {% include 'timerecord/footer.html' %}
