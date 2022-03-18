@@ -3,7 +3,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from .models import Achiever
 from timerecord.models import Goal
+from django.contrib.auth.decorators import login_required
 
 
 def register_view(request):
@@ -36,15 +38,17 @@ def logout_view(request):
     return redirect(request.META.get('HTTP_REFERER'))
     # Redirect to a success page.
 
-
+@login_required
 def profile_view(request, username):
     current_user = request.user
 
     if current_user.is_authenticated:
-        goals = Goal.objects.all()
+        goals = Goal.objects.filter(user=current_user)
+
         context = {
             "goals" : goals
         }
+
         return render(request, "accounts/profile.html", context)
     print("User не залогирован")
     return redirect("accounts:login")

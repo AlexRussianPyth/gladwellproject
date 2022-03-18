@@ -1,0 +1,16 @@
+@use "../custom" as custom;
+@use "../components/mixins" as mixins;
+
+.userinfo-container {
+    margin-top: 3rem;
+
+    .username {
+        @include mixins.gradient-text
+    }
+
+    .row .userinfo-description {
+        // border: 
+    }
+
+}
+

@@ -3,3 +3,11 @@
 @mixin gradient {
     background: linear-gradient(to right, rgba(custom.$primary, 0.95), rgba(custom.$secondary, 0.95));
 }
+
+@mixin gradient-text {
+    background-image: linear-gradient(to right, custom.$primary, custom.$secondary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+

@@ -1,17 +1,61 @@
 {% extends 'timerecord/base.html' %}
+{% load static %}
+
+
 {% block title %}Profile Page{% endblock %}
 
 {% block content %}
-<div>
-<p>Profile Page</p>
 
-
-<div class="h3">Top-3 Goals</div>
-{% for goal in goals %}
-<p>{{goal.name}}</p>
-{% endfor %}
-
+<!-- INFO BLOCK -->
+<!-- TODO: Добавить интерактивность и возможность изменить содержимое  -->
+<div class="container userinfo-container bla">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="display-4 text-center username fw-bold">{{ request.user.username }}</div>
+            <p class="text-center">{{ request.user.email }} <br> {{ request.user.first_name }} {{ request.user.last_name }}</p>
+            {% if request.user.achiever %}
+            <img class="img-fluid rounded-circle float-start p-4" src="{{ request.user.achiever.photo.url }}" alt="">
+            {% else %}
+            <button>TODO: Добавить описание</button>
+            {% endif %}
+        </div>
+        <div class="col-lg-6 shadow userinfo-description">
+            <div class="display-4 p-4">About Me</div>
+            {% if request.user.achiever %}
+            <p class="fst-italic fs-3">{{ request.user.achiever.about }}</p>
+            {% else %}
+            <button>TODO: Добавить описание</button>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+
+<!-- GOAL CARDS -->
+<div class="row pt-4">
+    
+    {% for goal in goals %}
+    
+        <div class="card mb-3 text-white bg-dark m-3" style="max-width: 540px;">
+        <div class="row g-0">
+
+          <div class="col-md-4">
+            <img src="{{ goal.image.url }}" class="img-fluid rounded-start" alt="{{ goal.slug }}">
+          </div>
+
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ goal.name }}</h5>
+              <p class="card-text">{{ goal.description }}</p>
+              <p class="card-text"><small class="text-muted">Target hours: {{ goal.target_hours }}</small></p>
+              <p class="card-text"><small class="text-muted">Rating: {{ goal.rating }}/10 </small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+    {% endfor %}
+<div>
 
 
 {% endblock %}

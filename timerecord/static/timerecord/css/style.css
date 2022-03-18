@@ -11138,4 +11138,14 @@ textarea.form-control-lg {
   font-weight: 600;
 }
 
+.userinfo-container {
+  margin-top: 3rem;
+}
+.userinfo-container .username {
+  background-image: linear-gradient(to right, #890F0D, #D9CE3F);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /*# sourceMappingURL=style.css.map */
