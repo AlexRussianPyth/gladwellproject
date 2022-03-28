@@ -3,17 +3,53 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .models import Achiever
+from .models import Profile
 from timerecord.models import Goal
 from django.contrib.auth.decorators import login_required
+from .forms import UserForm, ProfileForm
 
 
 def register_view(request):
-    form = UserCreationForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect("accounts:login")
-    return render(request, "accounts/register.html", {"form" : form})
+    """Shows a template with the form to create new user"""
+
+    if request.method == "POST":
+        user_form = UserForm(request.POST)
+        profile_form = ProfileForm(request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+
+            created_user = User.objects.get(username=request.POST.get("username"))
+
+            print(created_user, type(created_user))
+
+            # Profile.objects.create(
+            #     user=created_user,
+            #     photo=request.POST.get("photo"),
+            #     about=request.POST.get("about"),
+            #     )
+
+            print("Сохранено")
+
+    user_form = UserForm()
+    profile_form = ProfileForm()
+
+    return render(request, "accounts/register.html", {
+        "user_form" : user_form,
+        "profile_form" : profile_form
+        })
+
+
+
+
+    # form = UserCreationForm(request.POST or None)
+
+    # if request.method == "POST":
+    #     print(request.POST.get("about"))
+    #     print(request.POST.get("photo"))
+    #     # form.save()
+    #     return redirect("accounts:login")
+        
+    # return render(request, "accounts/register.html", {"form" : form})
 
 
 def login_view(request):
@@ -44,6 +80,7 @@ def profile_view(request, username):
 
     if current_user.is_authenticated:
         goals = Goal.objects.filter(user=current_user)
+        print(goals[1].check_progress())
 
         context = {
             "goals" : goals

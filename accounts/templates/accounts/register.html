@@ -2,9 +2,24 @@
 
 {% block content %}
 
-<form method='POST'> {% csrf_token %}
-    {{ form.as_p }}
-<button type='submit'>Зарегистрироваться</button>
+<!-- <div id="register-form" class="row register-form">
+    <div class="col-lg">
+        <form method='POST'> {% csrf_token %}
+            {{ form.as_p }}
+            <input type="text" name="about">
+            <p><input id="id_image" type="file" name="photo"></p>
+            
+        <button type='submit'>Register New Account</button>
+        </form>
+    </div>
+    <div class="col-lg"></div>
+</div> -->
+
+<form method="post">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button type="submit">Save changes</button>
 </form>
 
 

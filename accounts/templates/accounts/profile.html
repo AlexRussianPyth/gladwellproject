@@ -49,6 +49,9 @@
               <p class="card-text">{{ goal.description }}</p>
               <p class="card-text"><small class="text-muted">Target hours: {{ goal.target_hours }}</small></p>
               <p class="card-text"><small class="text-muted">Rating: {{ goal.rating }}/10 </small></p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: {{ goal.check_progress }}%" aria-valuenow="{{ goal.check_progress }}" aria-valuemin="0" aria-valuemax="{{ goal.target_hours }}"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -56,6 +59,21 @@
         
     {% endfor %}
 <div>
+
+
+  
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
 
 
 {% endblock %}

@@ -5,11 +5,14 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 User = get_user_model()
 
 
 class GoalQuerySet(models.QuerySet):
+    """Allow to search Goal Model by 2 fields simultaneously - by 'name' and 'description' """
     def search(self, query=None):
         if query is None or query == "":
             return self.get_queryset().none()
@@ -27,7 +30,6 @@ class GoalManager(models.Manager):
 
 class Goal(models.Model):
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE, null=True)
-    
     name = models.CharField(max_length=100, verbose_name="Название цели", null=False, blank=False, unique=True)
     slug = models.SlugField(blank=True, null=True)
     description = models.TextField(verbose_name="Описание цели")
@@ -37,11 +39,22 @@ class Goal(models.Model):
     is_achieved = models.BooleanField(default=False, verbose_name="Achieved?")
     image = models.ImageField(upload_to="%Y/%m/%d/", verbose_name="Изображение цели", null=True, blank=True)
 
-    def my_function_field(self):
-        if self.target_hours <= 15:
-            return "Small Goal"
-        else:
-            return "Long Goal"
+    objects = GoalManager()
+
+    # TODO Для более быстрой работы нам нужно создать сводную таблицу, которая будет обновляться только при 
+    # добавлении объекта TimeRecord. Тогда нам не придется каждый раз дергать базу.
+    def check_progress(self):
+        """Check all categories and timerecords, and return number of hours"""
+        category_set = self.category_set.all()
+
+        time_summary = 0
+
+        for category in category_set:
+            timerecords = category.timerecord_set.all()
+            for timerecord in timerecords:
+                time_summary += timerecord.time_added
+
+        return time_summary // 60
 
     def save(self, *args, **kwargs):
         if self.slug is None:
@@ -56,8 +69,8 @@ class Goal(models.Model):
 
 class Category(models.Model):
     """
-    This model uses for assigning a category (part of the goal).
-    hex_color: . Samples (color_palette) don't restrict user, just add some useful colors.
+    We use this model for assigning a category (part of the goal).
+    Samples (color_palette) don't restrict user, just add some useful colors.
     """
 
     COLOR_PALETTE = [
@@ -75,7 +88,7 @@ class Category(models.Model):
         return f"{self.title} category for {self.goal.name}"
     
     def get_absolute_url(self):
-        pass
+        return self.goal.get_absolute_url()
     
     def get_timerecords(self):
         return self.timerecord_set.all()

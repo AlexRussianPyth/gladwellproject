@@ -32,8 +32,11 @@
             </a>
 
             <div class="carousel-caption d-none d-md-block">
-              <h5>{{goal.name}}</h5>
+              <h3 class="fw-bold">{{goal.name}}</h3>
               <p>{{ goal.description }}</p>
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: {{ goal.check_progress }}%" aria-valuenow="{{ goal.check_progress }}" aria-valuemin="0" aria-valuemax="{{ goal.target_hours }}"></div>
+              </div>
             </div>
           </div>
           {% endfor %}
