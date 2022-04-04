@@ -1,0 +1,26 @@
+{% load static %}
+{% if form %}
+<div class="container userinfo-container" id="userinfo-container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="display-4 text-center username fw-bold">{{ form.user_name }}</div>
+            <p class="text-center">{{ form.email }} <br> {{ form.first_name }} {{ form.last_name }}</p>
+            
+            <!-- {% if form.user.photo %}
+            <div class="text-center">
+              <img class="img-fluid rounded-circle py-4" src="{{ form.user.photo.url }}" alt="">
+            </div>
+            {% else %}
+            <img class="img-fluid rounded-circle py-4" src="{% static 'accounts/default-user-profile-picture.jpg' %}" alt="">
+            {% endif %} -->
+        </div>
+        <div class="col-lg-8 shadow userinfo-description">
+            <div class="display-4 p-4">About Me</div>
+            <p class="fst-italic fs-3">{{ form.about }}</p>
+        </div>
+    </div>
+</div>
+{% else %}
+<p>Form isn't work. Please, notify the Administrator</p>
+{% endif %}
+

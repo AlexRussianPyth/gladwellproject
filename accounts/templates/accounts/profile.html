@@ -1,36 +1,37 @@
 {% extends 'timerecord/base.html' %}
 {% load static %}
-
-
 {% block title %}Profile Page{% endblock %}
 
 {% block content %}
-
 <!-- INFO BLOCK -->
-<!-- TODO: Добавить интерактивность и возможность изменить содержимое  -->
-<div class="container userinfo-container bla">
+<div class="container userinfo-container" id="userinfo-container">
     <div class="row">
-        <div class="col-lg-6">
-            <div class="display-4 text-center username fw-bold">{{ request.user.username }}</div>
+        <div class="col-lg-4">
+            <div class="display-4 text-center username fw-bold">{{ request.user.user_name }}</div>
+            {% if request.user.is_staff %} <div class="fw-bold text-center text-danger">Staff Member</div> {% endif %}
             <p class="text-center">{{ request.user.email }} <br> {{ request.user.first_name }} {{ request.user.last_name }}</p>
-            {% if request.user.achiever %}
-            <img class="img-fluid rounded-circle float-start p-4" src="{{ request.user.achiever.photo.url }}" alt="">
+            
+            {% if request.user.photo %}
+            <div class="text-center">
+              <img class="img-fluid rounded-circle py-4" src="{{ request.user.photo.url }}" alt="">
+            </div>
             {% else %}
-            <button>TODO: Добавить описание</button>
+            <img class="img-fluid rounded-circle py-4" src="{% static 'accounts/default-user-profile-picture.jpg' %}" alt="">
             {% endif %}
         </div>
-        <div class="col-lg-6 shadow userinfo-description">
+        <div class="col-lg-8 shadow userinfo-description">
             <div class="display-4 p-4">About Me</div>
-            {% if request.user.achiever %}
-            <p class="fst-italic fs-3">{{ request.user.achiever.about }}</p>
+            {% if request.user.about %}
+            <p class="fst-italic fs-3">{{ request.user.about }}</p>
             {% else %}
-            <button>TODO: Добавить описание</button>
+            <p class="fst-italic fs-3">There could be something about you...</p>
             {% endif %}
+            <button type="button" class="btn btn-outline-danger fw-bold float-end" hx-post="{% url 'accounts:profile' username=request.user.user_name %}" hx-target="#userinfo-container" hx-trigger="click" hx-swap="outerHTML">Edit Profile</button>
+          </div>
         </div>
-    </div>
-</div>
-
-
+      </div>
+      
+      
 <!-- GOAL CARDS -->
 <div class="row pt-4">
     
@@ -59,21 +60,5 @@
         
     {% endfor %}
 <div>
-
-
-  
-  <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-  <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-  <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-  <div class="progress">
-    <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-
 
 {% endblock %}

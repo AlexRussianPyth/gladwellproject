@@ -14,13 +14,13 @@
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'timerecord:homepage' %}">Дашборд</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'timerecord:homepage' %}">Dashboard</a>
           </li>
 
           <!-- Кнопка моего профиля либо кнопка "зайти в профиль" -->
             {% if request.user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'accounts:profile' username=request.user.username %}">Мой профиль</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'accounts:profile' username=request.user.user_name %}">Мой профиль</a>
               </li>
           {% else %}
           <li class="nav-item">

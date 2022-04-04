@@ -10,12 +10,12 @@ from django.contrib.auth import authenticate, login
 
 def homepage_view(request):
     context = {}
-
-    if request.user.is_authenticated:
-        user_goals = Goal.objects.filter(user=request.user)
-        context['all_objects'] = user_goals
-    else:
-        context['message'] = "Here could be your goals!"
+    print(request.user.is_authenticated)
+    # if request.user.is_authenticated:
+    #     user_goals = Goal.objects.filter(user=request.user)
+    #     context['all_objects'] = user_goals
+    # else:
+    #     context['message'] = "Here could be your goals!"
 
 
     return render(request, 'timerecord/homepage.html', context)

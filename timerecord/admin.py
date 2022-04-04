@@ -22,4 +22,3 @@ class GoalAdmin(admin.ModelAdmin):
 
 admin.site.register(Goal, GoalAdmin)
 admin.site.register(TimeRecord)
-# admin.site.register(Category, CategoryInline)

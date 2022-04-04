@@ -1,14 +1,7 @@
+from .models import Achiever
 from django import forms
-from django.contrib.auth.models import User
-from .models import Profile
 
-class UserForm(forms.ModelForm):
+class AchieverForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name')
-        
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ("photo", "about")
+        model = Achiever
+        fields = ('email', 'user_name', 'first_name', 'last_name', 'about')

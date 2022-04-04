@@ -15,7 +15,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -25,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_htmx',
     'colorfield',
     'timerecord',
     'accounts',
@@ -38,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_htmx.middleware.HtmxMiddleware'
 ]
 
 ROOT_URLCONF = 'gladwellproject.urls'
@@ -74,7 +75,7 @@ WSGI_APPLICATION = 'gladwellproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "test1", # DB name
+        'NAME': "test2", # DB name
         'USER': "moni", # in pgadmin
         'PASSWORD': "sobaka123",
     }
@@ -130,3 +131,5 @@ STATIC_ROOT = BASE_DIR / "static"
 STATIC_URL = "static/"
 
 LOGIN_URL = "accounts/login/"
+
+AUTH_USER_MODEL = 'accounts.Achiever'

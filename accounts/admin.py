@@ -1,16 +1,31 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
+from .models import Achiever
+from django.contrib.auth.admin import UserAdmin
+from django.forms import Textarea
 
-from accounts.models import Profile
+class UserAdminConfig(UserAdmin):
+    search_fields = ('email', "user_name", "first_name")
+    list_filter = ('email', 'user_name', 'first_name', 'is_active', 'is_staff')
+    ordering = ('user_name',)
+    list_display = ("email", "user_name", "first_name", "is_active", "is_staff")
 
-class ProfileInline(admin.StackedInline):
-    model = Profile
-    can_delete = False
-    verbose_name_plural = 'achievers'
+    fieldsets = (
+        (None, {'fields':('email', 'user_name', 'first_name')}),
+        ("Permissions", {'fields':('is_staff', "is_active")}),
+        ("Personal", {'fields': ('about', 'photo')})
+    )
 
-class UserAdmin(BaseUserAdmin):
-    inlines = (ProfileInline,)
+    formfield_overrides = {
+        Achiever.about: {
+            'widget': Textarea(attrs={'rows' : 10, "cols" : 40})
+        }
+    }
 
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+    add_fieldsets = (
+        None, {
+            "classes" : ('wide',),
+            "fields" : ('email', 'user_name', 'first_name', 'password1', 'password2', 'is_active', 'is_staff')
+        }
+    )
+
+admin.site.register(Achiever, UserAdminConfig)
