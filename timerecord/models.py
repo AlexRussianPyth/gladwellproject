@@ -30,6 +30,7 @@ class GoalManager(models.Manager):
         return self.get_queryset().search(query=query)
 
 class Goal(models.Model):
+    # мячик с полями и часами
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100, verbose_name="Название цели", null=False, blank=False, unique=True)
     slug = models.SlugField(blank=True, null=True)

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect
+from accounts.models import Achiever
 from timerecord.models import Goal
 from .forms import AchieverForm
 from django.contrib.auth.decorators import login_required
@@ -74,26 +75,32 @@ def logout_view(request):
 def profile_view(request, username):
     current_user = request.user
 
-    # user presses edit button
+    goals = Goal.objects.filter(user=current_user)
+    context = {
+        "goals" : goals
+    }
+
+    # if user presses edit button
     if request.htmx:
+        print("Видит htmx")
         form = AchieverForm(instance=current_user)
 
         context = {
             'form' : form
             }
-
+        
         return render(request, 'accounts/hx-userform.html', context)
+    
+    # user sends new data in form
+    if request.method == "POST":
+        print("Видит POST")
+        achiever_object = Achiever.objects.get(email=request.POST['email'])
+        f = AchieverForm(request.POST, instance=achiever_object)
+        f.save()
+        return redirect('accounts:profile', username=username)
 
-    if current_user.is_authenticated:
-        goals = Goal.objects.filter(user=current_user)
 
-        context = {
-            "goals" : goals
-        }
-
-        return render(request, "accounts/profile.html", context)
-    print("User не залогирован")
-    return redirect("accounts:login")
+    return render(request, "accounts/profile.html", context)
 
 def test_view(request):
     return render(request, 'accounts/hx-test.html', context={})

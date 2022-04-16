@@ -49,5 +49,5 @@ class Achiever(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['user_name', "first_name"] # for creating superusers
 
     def __str__(self):
-        return self.user_name
+        return f"Achiever: {self.user_name}"
 
