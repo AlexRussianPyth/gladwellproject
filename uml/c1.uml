@@ -1,0 +1,20 @@
+@startuml
+
+package "GladwellProject" {
+[TimeTracking]
+[Goals]
+[Auth]
+}
+() "Full Text Search API" as FTS
+
+[NotificationsService]
+
+[Analytics]
+() AnalyticsPanel
+
+' Connections
+FTS -- GladwellProject
+GladwellProject -- NotificationsService
+Analytics -- GladwellProject
+Analytics -- AnalyticsPanel
+@enduml
