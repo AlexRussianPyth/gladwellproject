@@ -5,10 +5,11 @@ volumes:
 
 services:
   db:
-    container_name: sql-database
+    container_name: postgre-database
     image: postgres:13.0-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - $HOME/python/data/gladwelldata:/var/lib/postgresql/data/
+      - ./sql/:/docker-entrypoint-initdb.d/
     env_file:
       - ./.env
     ports:
