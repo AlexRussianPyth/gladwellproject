@@ -33,18 +33,30 @@ table users_goals:
 table goals:
 		"Хранит цели"
 		goal_id uuid
-		user_id
 		name varchar(250)
 		description text
 		category_id
+		created_at date
+		updated_at date
+		expired_at date
+		duration timestamp
+
+table goals_timeunits:
+		"Хранит связь между целями и таймюнитами"
+		goal_id uuid
+		timeunit_id uuid
 
 table timeunits:
 		timeunit_id uuid
 		info varchar(250) # не обязательное уточнение
-		length int  # речь про минуты длительности активности
+		start_time datetime
+		end_time datetime
+		length_sec int  # речь про секунды длительности активности
 
+## таск
+V Добавить Postgre
+_ Добавить асинхронный SQL ALCHEMY
+_ Создать модели
+_ Запустить и потестить таблицы в Postgre
 
-
-table timeunits_goals:
-		timeunit_id uuid
-		goal_id uuid
+_ Добавить тестовые данные

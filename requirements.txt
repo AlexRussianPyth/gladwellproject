@@ -1,1 +1,4 @@
 pre-commit==2.20.0
+SQLAlchemy==1.4.44
+psycopg2-binary==2.9.5
+pydantic[dotenv]==1.10.2
