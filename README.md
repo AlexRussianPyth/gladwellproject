@@ -1,5 +1,5 @@
 # gladwellproject
-Project for rimetracking and goal setting in work environment
+Project for timetracking and goal setting in work environment
 
 ## Техническое задание
 Сервис должен уметь:
@@ -19,10 +19,24 @@ Project for rimetracking and goal setting in work environment
 
 ## Структура Postgre БД gladwell
 
+table users:
+		"Хранит Юзеров"
+		user_id uuid
+		email email_field
+		name varchar(250)
+		goals_achieved integer
+
+table users_goals:
+		user_id
+		goal_id
+
 table goals:
+		"Хранит цели"
 		goal_id uuid
+		user_id
 		name varchar(250)
 		description text
+		category_id
 
 table timeunits:
 		timeunit_id uuid
