@@ -35,7 +35,6 @@ table goals:
 		goal_id uuid
 		name varchar(250)
 		description text
-		category_id
 		created_at date
 		updated_at date
 		expired_at date
@@ -59,4 +58,7 @@ _ Добавить асинхронный SQL ALCHEMY
 _ Создать модели
 _ Запустить и потестить таблицы в Postgre
 
-_ Добавить тестовые данные
+_ Добавить Alembic
+
+_ Добавить генератор тестовых данных
+_ Написать тесты
