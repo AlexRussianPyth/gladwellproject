@@ -5,7 +5,7 @@ volumes:
 
 services:
   db:
-    container_name: postgre-database
+    container_name: timedb-postgres
     image: postgres:13.0-alpine
     volumes:
       - $HOME/python/data/gladwelldata:/var/lib/postgresql/data/

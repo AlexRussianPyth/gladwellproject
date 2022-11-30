@@ -1,24 +1,10 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import create_async_engine
+
+from src.core.config import settings
 
 
-def create_alchemy_engine(database_url: str, logs: bool = False):
-    """Создаст Engine для SQL Alchemy"""
-    engine = create_engine(database_url, echo=logs)
-    engine.connect()
-
-    return engine
-
-
-def recreate_tables(base, engine) -> None:
-    """Пересоздаем все базы"""
-    base.metadata.drop_all(engine)
-    base.metadata.create_all(engine)
-
-
-def get_base():
-    """Возвращаем декларативный базовый класс"""
-    return declarative_base()
-
-
-Base = get_base()
+engine = create_async_engine(
+    settings.get_alchemy_engine_url,
+    echo=True,
+    future=True,
+)
