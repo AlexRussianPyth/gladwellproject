@@ -25,6 +25,8 @@ table users:
 		email email_field
 		name varchar(250)
 		goals_achieved integer
+		register_date Date
+
 
 table users_goals:
 		user_id
@@ -38,7 +40,6 @@ table goals:
 		created_at date
 		updated_at date
 		expired_at date
-		duration timestamp
 
 table goals_timeunits:
 		"Хранит связь между целями и таймюнитами"
@@ -50,11 +51,10 @@ table timeunits:
 		info varchar(250) # не обязательное уточнение
 		start_time datetime
 		end_time datetime
-		length_sec int  # речь про секунды длительности активности
 
 ## таск
 V Добавить Postgre
-_ Добавить асинхронный SQL ALCHEMY
+V Добавить асинхронный SQL ALCHEMY
 _ Создать модели
 _ Запустить и потестить таблицы в Postgre
 

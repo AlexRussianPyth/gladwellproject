@@ -25,8 +25,13 @@ class PostgresSettings(DotEnvMixin):
         )
 
 
+class SqlAlchemySettings(DotEnvMixin):
+    echo: bool = Field(False, env="ECHO")
+
+
 class Settings(DotEnvMixin):
     postgres: PostgresSettings = PostgresSettings()
+    alchemy: SqlAlchemySettings = SqlAlchemySettings()
 
 
 settings = Settings()

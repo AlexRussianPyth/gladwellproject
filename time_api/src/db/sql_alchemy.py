@@ -4,7 +4,7 @@ from src.core.config import settings
 
 
 engine = create_async_engine(
-    settings.get_alchemy_engine_url,
-    echo=True,
+    settings.postgres.get_alchemy_engine_url,
+    echo=settings.alchemy.echo,
     future=True,
 )
