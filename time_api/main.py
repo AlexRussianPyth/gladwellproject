@@ -5,7 +5,7 @@ from src.db.sql_alchemy import get_engine, get_session
 from src.models.models import User
 
 
-async def test():
+async def main():
     """Create test user"""
     engine = get_engine()
     async with get_session(engine) as session:
@@ -19,4 +19,4 @@ async def test():
 
 
 if __name__ == "__main__":
-    asyncio.run(test())
+    asyncio.run(main())

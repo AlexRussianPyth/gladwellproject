@@ -12,7 +12,7 @@ from src.models import dataclasses, models
 
 class FakeDataGenerator:
     """Creates fake data for our project"""
-    def __init__(self, num_users: int, max_goals_per_user: int, max_timeunits_per_goal: int):
+    def __init__(self, num_users: int = 40, max_goals_per_user: int = 5, max_timeunits_per_goal: int = 20):
         self.num_users = num_users
         self.max_goals_per_user = max_goals_per_user
         self.max_timeunits_per_goal = max_timeunits_per_goal
