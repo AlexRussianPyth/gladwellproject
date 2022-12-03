@@ -26,12 +26,19 @@ class PostgresSettings(DotEnvMixin):
 
 
 class SqlAlchemySettings(DotEnvMixin):
-    echo: bool = Field(False, env="ECHO")
+    echo: bool = Field(True, env="ECHO")
+
+
+class FakeDataGeneratorSettings(DotEnvMixin):
+    num_users: int = Field(40, env="NUM_USERS")
+    max_goals_per_user: int = Field(5, env="MAX_GOALS_PER_USER")
+    max_timeunits_per_goal: int = Field(30, env="MAX_TIMEUNITS_PER_GOAL")
 
 
 class Settings(DotEnvMixin):
     postgres: PostgresSettings = PostgresSettings()
     alchemy: SqlAlchemySettings = SqlAlchemySettings()
+    fakedata: FakeDataGeneratorSettings = FakeDataGeneratorSettings()
 
 
 settings = Settings()

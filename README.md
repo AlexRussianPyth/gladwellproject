@@ -27,11 +27,6 @@ table users:
 		goals_achieved integer
 		register_date Date
 
-
-table users_goals:
-		user_id
-		goal_id
-
 table goals:
 		"Хранит цели"
 		goal_id uuid
@@ -40,11 +35,6 @@ table goals:
 		created_at date
 		updated_at date
 		expired_at date
-
-table goals_timeunits:
-		"Хранит связь между целями и таймюнитами"
-		goal_id uuid
-		timeunit_id uuid
 
 table timeunits:
 		timeunit_id uuid
@@ -55,10 +45,10 @@ table timeunits:
 ## таск
 V Добавить Postgre
 V Добавить асинхронный SQL ALCHEMY
-_ Создать модели
-_ Запустить и потестить таблицы в Postgre
+V Создать модели
+V Запустить и потестить таблицы в Postgre
 
-_ Добавить Alembic
+V Добавить Alembic
 
 _ Добавить генератор тестовых данных
 _ Написать тесты
