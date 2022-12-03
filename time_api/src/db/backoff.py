@@ -6,15 +6,6 @@ import time
 logger = logging.getLogger(__name__)
 
 
-def compute_delay(min_sleep_time: float, factor: float, retry: int, max_sleep_time: float) -> float:
-    """Compute delay for the next iteration."""
-
-    delay = min_sleep_time * (retry ** factor)
-    if delay < max_sleep_time:
-        return delay
-    return max_sleep_time
-
-
 def backoff(exceptions: tuple, min_sleep_time: float = 0.1, factor: float = 2, max_sleep_time: float = 20):
     """Retry call a function with delay.
 
@@ -32,12 +23,7 @@ def backoff(exceptions: tuple, min_sleep_time: float = 0.1, factor: float = 2, m
                 except exceptions:
                     logger.exception(f"Error in {str(func)}. Next try in {delay} seconds")
                     time.sleep(delay)
-                    delay = compute_delay(
-                        min_sleep_time=min_sleep_time,
-                        factor=factor,
-                        retry=retry,
-                        max_sleep_time=max_sleep_time
-                    )
+                    delay = min_sleep_time * (retry ** factor) if delay < max_sleep_time else max_sleep_time
                     retry += 1
         return inner
     return func_wrapper
