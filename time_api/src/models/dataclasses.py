@@ -1,5 +1,5 @@
-from uuid import UUID
 import datetime as dt
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -28,5 +28,3 @@ class Timeunit(BaseModel):
     info: str
     start_time: dt.datetime
     end_time: dt.datetime
-
-

@@ -1,5 +1,5 @@
-from uuid import uuid4
 import asyncio
+from uuid import uuid4
 
 from src.db.sql_alchemy import get_engine, get_session
 from src.models.models import User

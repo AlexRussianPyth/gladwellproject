@@ -1,11 +1,9 @@
-from uuid import uuid4
 import datetime as dt
+from uuid import uuid4
 
-from sqlalchemy import Column, Integer, String, Date, DateTime, ForeignKey
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import UUID
-
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 

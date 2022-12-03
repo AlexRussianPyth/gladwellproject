@@ -1,11 +1,13 @@
-from faker import Faker
+import asyncio
 import datetime as dt
-from uuid import uuid4, UUID
 import random
 from collections import defaultdict
+from uuid import UUID, uuid4
 
-from src.models import dataclasses
+from faker import Faker
 from src.core.config import settings
+from src.db.sql_alchemy import get_engine, get_session
+from src.models import dataclasses, models
 
 
 class FakeDataGenerator:
@@ -23,11 +25,11 @@ class FakeDataGenerator:
             user_id = uuid4()
             history["Users"].append(self._create_fake_user(user_id))
 
-            for _ in range(self.max_goals_per_user):
+            for _ in range(random.randint(0, self.max_goals_per_user)):
                 goal = self._create_fake_goal(user_id)
                 history["Goals"].append(goal)
 
-                for _ in range(self.max_timeunits_per_goal):
+                for _ in range(random.randint(0, self.max_timeunits_per_goal)):
                     history["Timeunits"].append(self._create_fake_timeunit(goal.goal_id))
 
         return history
@@ -56,6 +58,33 @@ class FakeDataGenerator:
                                     start_time=start_time, end_time=end_time)
 
 
+async def write_with_alchemy(test_data: dict) -> None:
+    """Write fake data to alchemy tables"""
+    # TODO Rewrite as generator
+    engine = get_engine()
+    async with get_session(engine) as session:
+        users = []
+        for user in test_data["Users"]:
+            users.append(models.User(**user.dict()))
+
+        goals = []
+        for goal in test_data["Goals"]:
+            goals.append(models.Goal(**goal.dict()))
+
+        timeunits = []
+        for timeunit in test_data["Timeunits"]:
+            timeunits.append(models.Timeunit(**timeunit.dict()))
+
+        session.add_all(users)
+        await session.commit()
+
+        session.add_all(goals)
+        await session.commit()
+
+        session.add_all(timeunits)
+        await session.commit()
+
+
 if __name__ == "__main__":
     fake_data_generator = FakeDataGenerator(
         settings.fakedata.num_users,
@@ -63,4 +92,4 @@ if __name__ == "__main__":
         settings.fakedata.max_timeunits_per_goal)
 
     history = fake_data_generator.create_user_history()
-    print(history)
+    asyncio.run(write_with_alchemy(history))

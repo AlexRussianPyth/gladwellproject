@@ -10,6 +10,18 @@ Project for timetracking and goal setting in work environment
 - Уведомлять пользователей о необходимых действиях и достигнутых целях (Notifications)
 - Давать возможность полнотекстового поиска (Elastic Search)
 
+## Запуск проекта
+1. Если у вас установлен Makefile, то используйте следующую команду:
+```make dev-compose```
+Если нет, то используйте docker-compose:
+```docker-compose up --build```
+
+2. Test Data. If you want to create test data for our project:
+		a. Start project, using docker-compose
+		b. ```python3 time_api/data_generator.py```
+
+
+
 ## Development
 Если вы хотите развивать данный проект и вносить изменения, то вам понадобятся:
 ### Pre-commit Hooks
