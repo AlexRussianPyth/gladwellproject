@@ -1,22 +1,13 @@
-import asyncio
-from uuid import uuid4
+from fastapi import FastAPI
 
-from src.db.sql_alchemy import get_engine, get_session
-from src.models.models import User
+app = FastAPI()
 
 
-async def main():
-    """Create test user"""
-    engine = get_engine()
-    async with get_session(engine) as session:
-        user1 = User(
-            user_id=uuid4(),
-            email="alex@mail.ru",
-            name="Alex",
-            goals_achieved=0)
-        session.add_all([user1])
-        await session.commit()
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+@app.get("/items/{item_id}")
+async def read_item(item_id: int, q: str | None = None):
+    return {"item_id": item_id, "q": q}
