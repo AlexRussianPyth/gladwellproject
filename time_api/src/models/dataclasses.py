@@ -2,7 +2,6 @@ import datetime as dt
 from uuid import UUID
 
 from pydantic import BaseModel
-import pydantic
 
 
 class User(BaseModel):
