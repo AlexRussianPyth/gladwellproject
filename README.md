@@ -26,7 +26,6 @@ Api Docs Path http://localhost:8000/docs
 
 
 
-
 ## Development
 Если вы хотите развивать данный проект и вносить изменения, то вам понадобятся:
 ### Pre-commit Hooks
@@ -59,13 +58,6 @@ table timeunits:
 		start_time datetime
 		end_time datetime
 
-## таск
-V Добавить Postgre
-V Добавить асинхронный SQL ALCHEMY
-V Создать модели
-V Запустить и потестить таблицы в Postgre
-
-V Добавить Alembic
-
-V Добавить генератор тестовых данных
-_ Написать тесты
+API
+_ Make cool config
+_ Make endpoint for adding users
