@@ -10,7 +10,7 @@ class User(BaseModel):
     email: str
     name: str
     goals_achieved: int
-    register_date: dt.datetime
+    register_date: dt.date
 
 
 class Goal(BaseModel):

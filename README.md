@@ -21,6 +21,11 @@ Project for timetracking and goal setting in work environment
 		b. ```python3 time_api/data_generator.py```
 
 
+## API
+Api Docs Path http://localhost:8000/docs
+
+
+
 
 ## Development
 Если вы хотите развивать данный проект и вносить изменения, то вам понадобятся:
