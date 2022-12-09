@@ -60,4 +60,4 @@ table timeunits:
 
 API
 _ Make cool config
-_ Make endpoint for adding users
+_ Make endpoint for adding new users. For this endpoint i should use pydantic model for request data

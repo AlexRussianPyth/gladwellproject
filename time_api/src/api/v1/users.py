@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter
 from sqlalchemy.future import select
 
@@ -15,3 +17,18 @@ async def get_all_users():
         all_users = result.scalars().all()
 
         return [dataclasses.User(**user.__dict__) for user in all_users]
+
+
+@router.post("/", summary="Add New User")
+async def add_user(data: dataclasses.UserIn):
+    """Add new User to database"""
+    async with get_session(get_engine()) as session:
+        user = models.User(
+            user_id=uuid.uuid4(),
+            email=data.email,
+            name=data.name,
+            register_date=data.register_date
+        )
+        session.add(user)
+        await session.commit()
+        return {"msg": "Success"}

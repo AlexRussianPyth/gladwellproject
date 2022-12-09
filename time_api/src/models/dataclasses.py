@@ -12,6 +12,13 @@ class User(BaseModel):
     register_date: dt.date
 
 
+class UserIn(BaseModel):
+    """Model for registering new User"""
+    email: str
+    name: str
+    register_date: dt.date = dt.date.today()
+
+
 class Goal(BaseModel):
     goal_id: UUID
     user_id: UUID
