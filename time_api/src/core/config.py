@@ -39,6 +39,8 @@ class TimeApiSettings(DotEnvMixin):
     project_name: str = Field("GladwellTracker", env="PROJECT_NAME")
     path: str = Field("/api/v1", env="TIMEAPI_URL_PATH")
     uvicorn_reload: bool = Field(True, env="UVICORN_RELOAD")
+    host: str = Field("0.0.0.0", env="TIMEAPI_HOST")
+    port: int = Field(8000, env="TIMEAPI_PORT")
 
 
 class Settings(DotEnvMixin):

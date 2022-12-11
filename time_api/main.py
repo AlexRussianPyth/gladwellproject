@@ -14,4 +14,9 @@ app.include_router(users.router, prefix=f"{settings.timeapi.path}/users", tags=[
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", reload=settings.timeapi.uvicorn_reload, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        "main:app",
+        reload=settings.timeapi.uvicorn_reload,
+        host=settings.timeapi.host,
+        port=settings.timeapi.port
+    )
