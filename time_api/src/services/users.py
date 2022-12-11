@@ -1,5 +1,4 @@
 import uuid
-from functools import lru_cache
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.future import select
@@ -37,9 +36,3 @@ class UserService:
                 return False
 
             return True
-
-
-@lru_cache()
-def get_user_service() -> UserService:
-    """Returns Singleton class, that works with Users in db"""
-    return UserService()
