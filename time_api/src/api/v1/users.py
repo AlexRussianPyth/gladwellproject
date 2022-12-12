@@ -36,6 +36,7 @@ async def get_user_by_id(user_id: UUID, users_service: UserService = Depends()):
 @router.post("/", summary="Add New User", status_code=HTTPStatus.CREATED, tags=["users"])
 async def add_user(data: dataclasses.UserIn, users_service: UserService = Depends()):
     """Add new User to database"""
-    if not await users_service.add_user(data):
-        raise HTTPException(status_code=400, detail="User is not created")
-    return {"msg": "Success"}
+    user = await users_service.add_user(data)
+    if not user:
+        raise HTTPException(status_code=400, detail="User with such data already created")
+    return user

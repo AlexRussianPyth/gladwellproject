@@ -29,21 +29,20 @@ class UserService:
                 return None
             return dataclasses.User(**user[0].__dict__)
 
-    async def add_user(self, data: dataclasses.UserIn) -> bool:
+    async def add_user(self, data: dataclasses.UserIn) -> dataclasses.User | None:
         """Add new User to database. Returns True if creation is successful"""
         async with get_session(self.engine) as session:
-            user = models.User(
-                user_id=uuid.uuid4(),
-                email=data.email,
-                goals_achieved=0,
-                name=data.name,
-                register_date=data.register_date
-            )
-
+            user_data = {
+                "user_id": uuid.uuid4(),
+                "email": data.email,
+                "goals_achieved": 0,
+                "name": data.name,
+                "register_date": data.register_date
+            }
+            user = models.User(**user_data)
             try:
                 session.add(user)
                 await session.commit()
             except IntegrityError:
-                return False
-
-            return True
+                return None
+            return dataclasses.User(**user_data)
