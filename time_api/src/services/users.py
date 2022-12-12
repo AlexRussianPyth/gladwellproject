@@ -9,18 +9,29 @@ from src.models import models, dataclasses
 
 class UserService:
     """Works with Users in database"""
+    def __init__(self):
+        self.engine = get_engine()
 
     async def get_all(self) -> list[dataclasses.User]:
         """Return all Users in database"""
-        async with get_session(get_engine()) as session:
+        async with get_session(self.engine) as session:
             result = await session.execute(select(models.User))
             all_users = result.scalars().all()
 
             return [dataclasses.User(**user.__dict__) for user in all_users]
 
+    async def get_user_by_id(self, user_id: uuid.UUID) -> dataclasses.User | None:
+        """Return user from database"""
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.User).where(models.User.user_id == user_id))
+            user = result.scalars().all()
+            if not user:
+                return None
+            return dataclasses.User(**user[0].__dict__)
+
     async def add_user(self, data: dataclasses.UserIn) -> bool:
         """Add new User to database. Returns True if creation is successful"""
-        async with get_session(get_engine()) as session:
+        async with get_session(self.engine) as session:
             user = models.User(
                 user_id=uuid.uuid4(),
                 email=data.email,
