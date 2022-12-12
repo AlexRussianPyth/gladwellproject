@@ -30,7 +30,13 @@ class UserService:
             return dataclasses.User(**user[0].__dict__)
 
     async def add_user(self, data: dataclasses.UserIn) -> dataclasses.User | None:
-        """Add new User to database. Returns True if creation is successful"""
+        """
+        Add new User to database.
+
+        Returns:
+        Created User if creation is successful
+        None if user is not found
+        """
         async with get_session(self.engine) as session:
             user_data = {
                 "user_id": uuid.uuid4(),
@@ -46,3 +52,15 @@ class UserService:
             except IntegrityError:
                 return None
             return dataclasses.User(**user_data)
+
+    async def delete_user(self, user_id: uuid.UUID) -> dataclasses.User | None:
+        """Delete user from database"""
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.User).where(models.User.user_id == user_id))
+            user = result.scalars().all()
+            if not user:
+                return None
+            await session.delete(user[0])
+            await session.commit()
+
+            return dataclasses.User(**user[0].__dict__)
