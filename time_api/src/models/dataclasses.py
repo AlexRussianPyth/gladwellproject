@@ -5,11 +5,11 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
-    user_id: UUID
-    email: str
-    name: str
-    goals_achieved: int
-    register_date: dt.date
+    user_id: UUID | None
+    email: str | None
+    name: str | None
+    goals_achieved: int | None
+    register_date: dt.date | None
 
 
 class UserIn(BaseModel):

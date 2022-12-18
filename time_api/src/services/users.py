@@ -50,11 +50,28 @@ class UserService:
                 session.add(user)
                 await session.commit()
             except IntegrityError:
+                await session.rollback()
                 return None
             return dataclasses.User(**user_data)
 
+    async def update_user(self, user_id: uuid.UUID, data: dataclasses.User) -> bool:
+        """ updates existing User """
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.User).where(models.User.user_id == user_id))
+            user = result.scalars().one()
+
+            # TODO Rewrite without such strong coupling
+            user.email = data.email if not None else user.email
+            user.name = data.name if not None else user.name
+            user.goals_achieved = data.goals_achieved if not None else user.goals_achieved
+            user.register_date = data.register_date if not None else user.register_date
+
+            await session.commit()
+
+            return True
+
     async def delete_user(self, user_id: uuid.UUID) -> dataclasses.User | None:
-        """Delete user from database"""
+        """ Delete user from database """
         async with get_session(self.engine) as session:
             result = await session.execute(select(models.User).where(models.User.user_id == user_id))
             user = result.scalars().all()

@@ -12,7 +12,6 @@ app = FastAPI(
 
 app.include_router(users.router, prefix=f"{settings.timeapi.path}/users", tags=["users"])
 
-
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",

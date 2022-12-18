@@ -41,6 +41,16 @@ async def add_user(data: dataclasses.UserIn, users_service: UserService = Depend
     return user
 
 
+@router.patch("/{user_id}", summary="Update User", status_code=HTTPStatus.NO_CONTENT, tags=["users"])
+async def update_user(user_id: UUID, data: dataclasses.User, users_service: UserService = Depends()):
+    user = await users_service.get_user_by_id(user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User is not found")
+    print(f"DATA!{data}")
+    await users_service.update_user(user_id, data)
+    return {"msg": "Updating Successful"}
+
+
 @router.delete("/{user_id}", summary="Delete User", status_code=HTTPStatus.OK, tags=["users"])
 async def delete_user(user_id: UUID, users_service: UserService = Depends()):
     user = await users_service.delete_user(user_id)
