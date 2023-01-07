@@ -19,16 +19,16 @@ class GoalService:
             all_goals = result.scalars().all()
 
             return [dataclasses.Goal(**goal.__dict__) for goal in all_goals]
-#
-#     async def get_user_by_id(self, user_id: uuid.UUID) -> dataclasses.User | None:
-#         """Return user from database"""
-#         async with get_session(self.engine) as session:
-#             result = await session.execute(select(models.User).where(models.User.user_id == user_id))
-#             user = result.scalars().all()
-#             if not user:
-#                 return None
-#             return dataclasses.User(**user[0].__dict__)
-#
+
+    async def get_goal_by_id(self, goal_id: uuid.UUID) -> dataclasses.Goal | None:
+        """Return Goal from database"""
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Goal).where(models.Goal.goal_id == goal_id))
+            goal = result.scalars().all()
+            if not goal:
+                return None
+            return dataclasses.Goal(**goal[0].__dict__)
+
 #     async def add_user(self, data: dataclasses.UserIn) -> dataclasses.User | None:
 #         """
 #         Add new User to database.

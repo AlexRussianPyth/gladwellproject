@@ -22,18 +22,18 @@ async def get_all_goals(goals_service: GoalService = Depends()):
     """Return all Goals in database"""
     goals = await goals_service.get_all()
     return paginate(goals)
-#
-#
-# @router.get("/{user_id}", response_model=dataclasses.User, summary="Get User by ID",
-#             status_code=HTTPStatus.OK, tags=["users"], response_description="User by concrete id")
-# async def get_user_by_id(user_id: UUID, users_service: UserService = Depends()):
-#     """Return Single User by id"""
-#     user = await users_service.get_user_by_id(user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User is not found")
-#     return user
-#
-#
+
+
+@router.get("/{goal_id}", response_model=dataclasses.Goal, summary="Get goal by ID",
+            status_code=HTTPStatus.OK, tags=["goals"], response_description="Goal by specific id")
+async def get_goal_by_id(goal_id: UUID, goals_service: GoalService = Depends()):
+    """Return single Goal by id"""
+    goal = await goals_service.get_goal_by_id(goal_id)
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal is not found")
+    return goal
+
+
 # @router.post("/", summary="Add New User", status_code=HTTPStatus.CREATED, tags=["users"])
 # async def add_user(data: dataclasses.UserIn, users_service: UserService = Depends()):
 #     user = await users_service.add_user(data)

@@ -63,7 +63,12 @@ V Make cool config
 V Make endpoint for adding new users. For this endpoint i should use pydantic model for request data
 V Make service that works with Users
 V Make other endpoints
-_ Make Pagination
+V Make Pagination
+_ Goals Endpoint
+_ Timetracking Endpoints
+
+
+
 
 Telegram Bot
 _ Learn Theory
