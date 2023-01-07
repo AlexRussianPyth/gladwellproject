@@ -20,73 +20,63 @@ class TimeunitsService:
 
             return [dataclasses.Timeunit(**timeunit.__dict__) for timeunit in all_timeunits]
 
-    # async def get_user_by_id(self, user_id: uuid.UUID) -> dataclasses.User | None:
-    #     """Return user from database"""
-    #     async with get_session(self.engine) as session:
-    #         result = await session.execute(select(models.User).where(models.User.user_id == user_id))
-    #         user = result.scalars().all()
-    #         if not user:
-    #             return None
-    #         return dataclasses.User(**user[0].__dict__)
-    #
-    # async def get_goals_by_user_id(self, user_id: uuid.UUID) -> list[dataclasses.Goal]:
-    #     """Return Goals by User from database"""
-    #     async with get_session(self.engine) as session:
-    #         result = await session.execute(select(models.Goal).where(models.Goal.user_id == user_id))
-    #         all_goals = result.scalars().all()
-    #
-    #         return [dataclasses.Goal(**goal.__dict__) for goal in all_goals]
-    #
-    # async def add_user(self, data: dataclasses.UserIn) -> dataclasses.User | None:
-    #     """
-    #     Add new User to database.
-    #
-    #     Returns:
-    #     Created User if creation is successful
-    #     None if user is not found
-    #     """
-    #     async with get_session(self.engine) as session:
-    #         user_data = {
-    #             "user_id": uuid.uuid4(),
-    #             "email": data.email,
-    #             "goals_achieved": 0,
-    #             "name": data.name,
-    #             "register_date": data.register_date
-    #         }
-    #         user = models.User(**user_data)
-    #         try:
-    #             session.add(user)
-    #             await session.commit()
-    #         except IntegrityError:
-    #             await session.rollback()
-    #             return None
-    #         return dataclasses.User(**user_data)
-    #
-    # async def update_user(self, user_id: uuid.UUID, data: dataclasses.User) -> bool:
-    #     """ updates existing User """
-    #     async with get_session(self.engine) as session:
-    #         result = await session.execute(select(models.User).where(models.User.user_id == user_id))
-    #         user = result.scalars().one()
-    #
-    #         # TODO Rewrite without such strong coupling
-    #         user.email = data.email if not None else user.email
-    #         user.name = data.name if not None else user.name
-    #         user.goals_achieved = data.goals_achieved if not None else user.goals_achieved
-    #         user.register_date = data.register_date if not None else user.register_date
-    #
-    #         await session.commit()
-    #
-    #         return True
-    #
-    # async def delete_user(self, user_id: uuid.UUID) -> dataclasses.User | None:
-    #     """ Delete user from database """
-    #     async with get_session(self.engine) as session:
-    #         result = await session.execute(select(models.User).where(models.User.user_id == user_id))
-    #         user = result.scalars().all()
-    #         if not user:
-    #             return None
-    #         await session.delete(user[0])
-    #         await session.commit()
-    #
-    #         return dataclasses.User(**user[0].__dict__)
-    #
+    async def get_timeunit_by_id(self, timeunit_id: uuid.UUID) -> dataclasses.Timeunit | None:
+        """Return Timeunit from database"""
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Timeunit).where(models.Timeunit.timeunit_id == timeunit_id))
+            timeunit = result.scalars().all()
+            if not timeunit:
+                return None
+            return dataclasses.Timeunit(**timeunit[0].__dict__)
+
+    async def add_timeunit(self, data: dataclasses.Timeunit) -> dataclasses.Timeunit | None:
+        """
+        Add new timeunit to database.
+
+        Returns:
+        Created timeunit if creation is successful
+        None if timeunit is not found
+        """
+        async with get_session(self.engine) as session:
+            timeunit_data = {
+                "timeunit_id": uuid.uuid4(),
+                "goal_id": data.goal_id,
+                "info": data.info,
+                "start_time": data.start_time,
+                "end_time": data.end_time
+            }
+            timeunit = models.Timeunit(**timeunit_data)
+            try:
+                session.add(timeunit)
+                await session.commit()
+            except IntegrityError:
+                await session.rollback()
+                return None
+            return dataclasses.Timeunit(**timeunit_data)
+
+    async def update_timeunit(self, timeunit_id: uuid.UUID, data: dataclasses.TimeunitPatchIn) -> bool:
+        """ Updates existing timeunit """
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Timeunit).where(models.Timeunit.timeunit_id == timeunit_id))
+            timeunit = result.scalars().one()
+
+            # TODO Rewrite without such strong coupling
+            timeunit.info = data.info if not None else timeunit.info
+            timeunit.start_time = data.start_time if not None else timeunit.start_time
+            timeunit.end_time = data.end_time if not None else timeunit.end_time
+
+            await session.commit()
+
+            return True
+
+    async def delete_timeunit(self, timeunit_id: uuid.UUID) -> dataclasses.Timeunit | None:
+        """ Delete timeunit from database """
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Timeunit).where(models.Timeunit.timeunit_id == timeunit_id))
+            timeunit = result.scalars().all()
+            if not timeunit:
+                return None
+            await session.delete(timeunit[0])
+            await session.commit()
+
+            return dataclasses.Timeunit(**timeunit[0].__dict__)

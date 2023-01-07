@@ -23,51 +23,39 @@ async def get_all_timeunits(timeunits_service: TimeunitsService = Depends()):
     timeunits = await timeunits_service.get_all()
     print(timeunits)
     return paginate(timeunits)
-#
-#
-# @router.get("/{user_id}", response_model=dataclasses.User, summary="Get User by ID",
-#             status_code=HTTPStatus.OK, tags=["users"], response_description="User by specific id")
-# async def get_user_by_id(user_id: UUID, users_service: UserService = Depends()):
-#     """Return Single User by id"""
-#     user = await users_service.get_user_by_id(user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User is not found")
-#     return user
-#
-#
-# @router.get("/{user_id}/goals", response_model=Page[dataclasses.Goal], summary="Get Goals by specific User",
-#             status_code=HTTPStatus.OK, tags=["users"], response_description="Goals by specific User Id")
-# async def get_goals_by_user_id(user_id: UUID, users_service: UserService = Depends()):
-#     """Return Goals by User id"""
-#     user = await users_service.get_user_by_id(user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User is not found")
-#     goals = await users_service.get_goals_by_user_id(user_id)
-#
-#     return paginate(goals)
-#
-#
-# @router.post("/", summary="Add New User", status_code=HTTPStatus.CREATED, tags=["users"])
-# async def add_user(data: dataclasses.UserIn, users_service: UserService = Depends()):
-#     user = await users_service.add_user(data)
-#     if not user:
-#         raise HTTPException(status_code=400, detail="User with such data already created")
-#     return user
-#
-#
-# @router.patch("/{user_id}", summary="Update User", status_code=HTTPStatus.NO_CONTENT, tags=["users"])
-# async def update_user(user_id: UUID, data: dataclasses.User, users_service: UserService = Depends()):
-#     user = await users_service.get_user_by_id(user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User is not found")
-#     await users_service.update_user(user_id, data)
-#     return {"msg": "Updating Successful"}
-#
-#
-# @router.delete("/{user_id}", summary="Delete User", status_code=HTTPStatus.OK, tags=["users"])
-# async def delete_user(user_id: UUID, users_service: UserService = Depends()):
-#     user = await users_service.delete_user(user_id)
-#     if not user:
-#         raise HTTPException(status_code=404, detail="User is not found")
-#     return {"msg": "Success", "deleted_user": user}
-#
+
+
+@router.get("/{timeunit_id}", response_model=dataclasses.Timeunit, summary="Get Timeunit by ID",
+            status_code=HTTPStatus.OK, tags=["timeunits"], response_description="Timeunit by specific id")
+async def get_timeunit_by_id(timeunit_id: UUID, timeunits_service: TimeunitsService = Depends()):
+    """Return Single Timeunit by ID"""
+    timeunit = await timeunits_service.get_timeunit_by_id(timeunit_id)
+    if not timeunit:
+        raise HTTPException(status_code=404, detail="Timeunit is not found")
+    return timeunit
+
+
+@router.post("/", summary="Add New Timeunit", status_code=HTTPStatus.CREATED, tags=["timeunits"])
+async def add_timeunit(data: dataclasses.TimeunitIn, timeunits_service: TimeunitsService = Depends()):
+    timeunit = await timeunits_service.add_timeunit(data)
+    if not timeunit:
+        raise HTTPException(status_code=400, detail="Timeunit with such data already created")
+    return timeunit
+
+
+@router.patch("/{timeunit_id}", summary="Update Timeunit", status_code=HTTPStatus.NO_CONTENT, tags=["timeunits"])
+async def update_timeunit(timeunit_id: UUID, data: dataclasses.TimeunitPatchIn,
+                          timeunits_service: TimeunitsService = Depends()):
+    timeunit = await timeunits_service.get_timeunit_by_id(timeunit_id)
+    if not timeunit:
+        raise HTTPException(status_code=404, detail="Timeunit is not found")
+    await timeunits_service.update_timeunit(timeunit_id, data)
+    return {"msg": "Updating Successful"}
+
+
+@router.delete("/{timeunit_id}", summary="Delete Timeunit", status_code=HTTPStatus.OK, tags=["timeunits"])
+async def delete_timeunit(timeunit_id: UUID, timeunits_service: TimeunitsService = Depends()):
+    timeunit = await timeunits_service.delete_timeunit(timeunit_id)
+    if not timeunit:
+        raise HTTPException(status_code=404, detail="Timeunit is not found")
+    return {"msg": "Success", "deleted_timeunit": timeunit}

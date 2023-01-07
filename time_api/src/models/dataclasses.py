@@ -51,3 +51,16 @@ class Timeunit(BaseModel):
     info: str
     start_time: dt.datetime
     end_time: dt.datetime
+
+
+class TimeunitIn(BaseModel):
+    goal_id: UUID
+    info: str
+    start_time: dt.datetime
+    end_time: dt.datetime
+
+
+class TimeunitPatchIn(BaseModel):
+    info: str
+    start_time: dt.datetime
+    end_time: dt.datetime
