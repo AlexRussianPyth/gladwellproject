@@ -29,6 +29,13 @@ class Goal(BaseModel):
     expired_at: dt.datetime
 
 
+class GoalPatchIn(BaseModel):
+    """Model for data that uses to patch existing Goal"""
+    name: str
+    description: str
+    expired_at: dt.datetime
+
+
 class GoalIn(BaseModel):
     """Model for adding new Goal"""
     user_id: UUID

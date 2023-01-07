@@ -55,32 +55,30 @@ class GoalService:
                 await session.rollback()
                 return None
             return dataclasses.Goal(**goal_data)
-#
-#     async def update_user(self, user_id: uuid.UUID, data: dataclasses.User) -> bool:
-#         """ updates existing User """
-#         async with get_session(self.engine) as session:
-#             result = await session.execute(select(models.User).where(models.User.user_id == user_id))
-#             user = result.scalars().one()
-#
-#             # TODO Rewrite without such strong coupling
-#             user.email = data.email if not None else user.email
-#             user.name = data.name if not None else user.name
-#             user.goals_achieved = data.goals_achieved if not None else user.goals_achieved
-#             user.register_date = data.register_date if not None else user.register_date
-#
-#             await session.commit()
-#
-#             return True
-#
-#     async def delete_user(self, user_id: uuid.UUID) -> dataclasses.User | None:
-#         """ Delete user from database """
-#         async with get_session(self.engine) as session:
-#             result = await session.execute(select(models.User).where(models.User.user_id == user_id))
-#             user = result.scalars().all()
-#             if not user:
-#                 return None
-#             await session.delete(user[0])
-#             await session.commit()
-#
-#             return dataclasses.User(**user[0].__dict__)
-#
+
+    async def update_goal(self, goal_id: uuid.UUID, data: dataclasses.Goal) -> bool:
+        """ Updates existing Goal """
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Goal).where(models.Goal.goal_id == goal_id))
+            goal = result.scalars().one()
+
+            # TODO Rewrite without such strong coupling
+            goal.description = data.description if not None else goal.description
+            goal.name = data.name if not None else goal.name
+            goal.expired_at = data.expired_at if not None else goal.expired_at
+
+            await session.commit()
+
+            return True
+
+    async def delete_goal(self, goal_id: uuid.UUID) -> dataclasses.Goal | None:
+        """ Delete Goal from database """
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Goal).where(models.Goal.goal_id == goal_id))
+            goal = result.scalars().all()
+            if not goal:
+                return None
+            await session.delete(goal[0])
+            await session.commit()
+
+            return dataclasses.Goal(**goal[0].__dict__)

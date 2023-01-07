@@ -47,7 +47,6 @@ async def update_user(user_id: UUID, data: dataclasses.User, users_service: User
     user = await users_service.get_user_by_id(user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User is not found")
-    print(f"DATA!{data}")
     await users_service.update_user(user_id, data)
     return {"msg": "Updating Successful"}
 

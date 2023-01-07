@@ -65,6 +65,7 @@ V Make service that works with Users
 V Make other endpoints
 V Make Pagination
 _ Goals Endpoint
+_ Endpoint for getting goals by user
 _ Timetracking Endpoints
 
 
