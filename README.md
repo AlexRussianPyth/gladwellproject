@@ -11,6 +11,7 @@ Project for timetracking and goal setting in work environment
 - Давать возможность полнотекстового поиска (Elastic Search)
 
 ## Запуск проекта
+$ alembic upgrade head
 1. Если у вас установлен Makefile, то используйте следующую команду:
 ```make dev-compose```
 Если нет, то используйте docker-compose:
@@ -19,6 +20,10 @@ Project for timetracking and goal setting in work environment
 2. Test Data. If you want to create test data for our project:
 		a. Start project, using docker-compose
 		b. ```python3 time_api/data_generator.py```
+
+
+## API
+Api Docs Path http://localhost:8000/docs
 
 
 
@@ -31,36 +36,10 @@ Project for timetracking and goal setting in work environment
 
 ## Структура Postgre БД gladwell
 
-table users:
-		"Хранит Юзеров"
-		user_id uuid
-		email email_field
-		name varchar(250)
-		goals_achieved integer
-		register_date Date
 
-table goals:
-		"Хранит цели"
-		goal_id uuid
-		name varchar(250)
-		description text
-		created_at date
-		updated_at date
-		expired_at date
 
-table timeunits:
-		timeunit_id uuid
-		info varchar(250) # не обязательное уточнение
-		start_time datetime
-		end_time datetime
+Telegram Bot
+_ Learn Theory
+_ 
 
-## таск
-V Добавить Postgre
-V Добавить асинхронный SQL ALCHEMY
-V Создать модели
-V Запустить и потестить таблицы в Postgre
-
-V Добавить Alembic
-
-V Добавить генератор тестовых данных
-_ Написать тесты
+gRPC API

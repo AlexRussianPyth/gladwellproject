@@ -1,22 +1,25 @@
-import asyncio
-from uuid import uuid4
+from fastapi import FastAPI
+from fastapi_pagination import add_pagination
+import uvicorn
 
-from src.db.sql_alchemy import get_engine, get_session
-from src.models.models import User
+from src.api.v1 import users, goals, timeunits
+from src.core.config import settings
 
+app = FastAPI(
+    title=settings.timeapi.project_name,
+    docs_url='/api/openapi',
+    openapi_url='/api/openapi.json',
+)
+add_pagination(app)
 
-async def main():
-    """Create test user"""
-    engine = get_engine()
-    async with get_session(engine) as session:
-        user1 = User(
-            user_id=uuid4(),
-            email="alex@mail.ru",
-            name="Alex",
-            goals_achieved=0)
-        session.add_all([user1])
-        await session.commit()
-
+app.include_router(users.router, prefix=f"{settings.timeapi.path}/users", tags=["users"])
+app.include_router(goals.router, prefix=f"{settings.timeapi.path}/goals", tags=["goals"])
+app.include_router(timeunits.router, prefix=f"{settings.timeapi.path}/timeunits", tags=["timeunits"])
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    uvicorn.run(
+        "main:app",
+        reload=settings.timeapi.uvicorn_reload,
+        host=settings.timeapi.host,
+        port=settings.timeapi.port
+    )
