@@ -29,6 +29,14 @@ class GoalService:
                 return None
             return dataclasses.Goal(**goal[0].__dict__)
 
+    async def get_timeunits_by_goal_id(self, goal_id: uuid.UUID) -> list[dataclasses.Timeunit]:
+        """Return Timeunits by Goal from database"""
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Timeunit).where(models.Timeunit.goal_id == goal_id))
+            all_timeunits = result.scalars().all()
+
+            return [dataclasses.Timeunit(**timeunit.__dict__) for timeunit in all_timeunits]
+
     async def add_goal(self, data: dataclasses.GoalIn) -> dataclasses.Goal | None:
         """
         Add new Goal to database.
@@ -56,7 +64,7 @@ class GoalService:
                 return None
             return dataclasses.Goal(**goal_data)
 
-    async def update_goal(self, goal_id: uuid.UUID, data: dataclasses.Goal) -> bool:
+    async def update_goal(self, goal_id: uuid.UUID, data: dataclasses.GoalPatchIn) -> bool:
         """ Updates existing Goal """
         async with get_session(self.engine) as session:
             result = await session.execute(select(models.Goal).where(models.Goal.goal_id == goal_id))

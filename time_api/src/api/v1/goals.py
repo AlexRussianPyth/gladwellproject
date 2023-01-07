@@ -34,6 +34,19 @@ async def get_goal_by_id(goal_id: UUID, goals_service: GoalService = Depends()):
     return goal
 
 
+@router.get("/{goal_id}/timeunits", response_model=Page[dataclasses.Timeunit],
+            summary="Get Timeunits by specific Goal",
+            status_code=HTTPStatus.OK, tags=["goals"], response_description="Timeunits by specific Goal Id")
+async def get_timeunits_by_goal_id(goal_id: UUID, goals_service: GoalService = Depends()):
+    """Return timeunits by Goal id"""
+    goal = await goals_service.get_goal_by_id(goal_id)
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal is not found")
+    timeunits = await goals_service.get_timeunits_by_goal_id(goal_id)
+
+    return paginate(timeunits)
+
+
 @router.post("/", summary="Add New Goal", status_code=HTTPStatus.CREATED, tags=["goals"])
 async def add_goal(data: dataclasses.GoalIn, goals_service: GoalService = Depends()):
     goal = await goals_service.add_goal(data)

@@ -36,17 +36,6 @@ Api Docs Path http://localhost:8000/docs
 
 ## Структура Postgre БД gladwell
 
-API
-V Make cool config
-V Make endpoint for adding new users. For this endpoint i should use pydantic model for request data
-V Make service that works with Users
-V Make other endpoints
-V Make Pagination
-V Goals Endpoint
-_ Endpoint for getting goals by user
-_ Timetracking Endpoints
-
-
 
 
 Telegram Bot
