@@ -34,12 +34,18 @@ async def get_goal_by_id(goal_id: UUID, goals_service: GoalService = Depends()):
     return goal
 
 
-# @router.post("/", summary="Add New User", status_code=HTTPStatus.CREATED, tags=["users"])
-# async def add_user(data: dataclasses.UserIn, users_service: UserService = Depends()):
-#     user = await users_service.add_user(data)
-#     if not user:
-#         raise HTTPException(status_code=400, detail="User with such data already created")
-#     return user
+@router.post("/", summary="Add New Goal", status_code=HTTPStatus.CREATED, tags=["goals"])
+async def add_goal(data: dataclasses.GoalIn, goals_service: GoalService = Depends()):
+    goal = await goals_service.add_goal(data)
+    if not goal:
+        raise HTTPException(status_code=400, detail="Goal with such data already created")
+    return goal
+
+
+# Get Goals By User Id
+
+
+
 #
 #
 # @router.patch("/{user_id}", summary="Update User", status_code=HTTPStatus.NO_CONTENT, tags=["users"])
@@ -50,7 +56,7 @@ async def get_goal_by_id(goal_id: UUID, goals_service: GoalService = Depends()):
 #     print(f"DATA!{data}")
 #     await users_service.update_user(user_id, data)
 #     return {"msg": "Updating Successful"}
-#
+
 #
 # @router.delete("/{user_id}", summary="Delete User", status_code=HTTPStatus.OK, tags=["users"])
 # async def delete_user(user_id: UUID, users_service: UserService = Depends()):
@@ -58,5 +64,3 @@ async def get_goal_by_id(goal_id: UUID, goals_service: GoalService = Depends()):
 #     if not user:
 #         raise HTTPException(status_code=404, detail="User is not found")
 #     return {"msg": "Success", "deleted_user": user}
-#
-#

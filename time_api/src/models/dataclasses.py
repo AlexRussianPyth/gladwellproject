@@ -29,6 +29,15 @@ class Goal(BaseModel):
     expired_at: dt.datetime
 
 
+class GoalIn(BaseModel):
+    """Model for adding new Goal"""
+    user_id: UUID
+    name: str
+    description: str
+    created_at: dt.datetime = dt.datetime.now()
+    expired_at: dt.datetime
+
+
 class Timeunit(BaseModel):
     timeunit_id: UUID
     goal_id: UUID

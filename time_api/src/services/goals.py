@@ -29,30 +29,32 @@ class GoalService:
                 return None
             return dataclasses.Goal(**goal[0].__dict__)
 
-#     async def add_user(self, data: dataclasses.UserIn) -> dataclasses.User | None:
-#         """
-#         Add new User to database.
-#
-#         Returns:
-#         Created User if creation is successful
-#         None if user is not found
-#         """
-#         async with get_session(self.engine) as session:
-#             user_data = {
-#                 "user_id": uuid.uuid4(),
-#                 "email": data.email,
-#                 "goals_achieved": 0,
-#                 "name": data.name,
-#                 "register_date": data.register_date
-#             }
-#             user = models.User(**user_data)
-#             try:
-#                 session.add(user)
-#                 await session.commit()
-#             except IntegrityError:
-#                 await session.rollback()
-#                 return None
-#             return dataclasses.User(**user_data)
+    async def add_goal(self, data: dataclasses.GoalIn) -> dataclasses.Goal | None:
+        """
+        Add new Goal to database.
+
+        Returns:
+        Created goal if creation is successful
+        None if goal is not found
+        """
+        async with get_session(self.engine) as session:
+            goal_data = {
+                "goal_id": uuid.uuid4(),
+                "user_id": data.user_id,
+                "name": data.name,
+                "description": data.description,
+                "created_at": data.created_at,
+                "updated_at": data.created_at,
+                "expired_at": data.expired_at,
+            }
+            goal = models.Goal(**goal_data)
+            try:
+                session.add(goal)
+                await session.commit()
+            except IntegrityError:
+                await session.rollback()
+                return None
+            return dataclasses.Goal(**goal_data)
 #
 #     async def update_user(self, user_id: uuid.UUID, data: dataclasses.User) -> bool:
 #         """ updates existing User """
