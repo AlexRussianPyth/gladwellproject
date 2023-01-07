@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi_pagination import add_pagination
 import uvicorn
 
-from src.api.v1 import users
+from src.api.v1 import users, goals
 from src.core.config import settings
 
 app = FastAPI(
@@ -13,6 +13,7 @@ app = FastAPI(
 add_pagination(app)
 
 app.include_router(users.router, prefix=f"{settings.timeapi.path}/users", tags=["users"])
+app.include_router(goals.router, prefix=f"{settings.timeapi.path}/goals", tags=["goals"])
 
 if __name__ == "__main__":
     uvicorn.run(
