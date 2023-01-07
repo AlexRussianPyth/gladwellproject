@@ -11,6 +11,7 @@ Project for timetracking and goal setting in work environment
 - Давать возможность полнотекстового поиска (Elastic Search)
 
 ## Запуск проекта
+$ alembic upgrade head
 1. Если у вас установлен Makefile, то используйте следующую команду:
 ```make dev-compose```
 Если нет, то используйте docker-compose:
@@ -35,36 +36,13 @@ Api Docs Path http://localhost:8000/docs
 
 ## Структура Postgre БД gladwell
 
-table users:
-		"Хранит Юзеров"
-		user_id uuid
-		email email_field
-		name varchar(250)
-		goals_achieved integer
-		register_date Date
-
-table goals:
-		"Хранит цели"
-		goal_id uuid
-		name varchar(250)
-		description text
-		created_at date
-		updated_at date
-		expired_at date
-
-table timeunits:
-		timeunit_id uuid
-		info varchar(250) # не обязательное уточнение
-		start_time datetime
-		end_time datetime
-
 API
 V Make cool config
 V Make endpoint for adding new users. For this endpoint i should use pydantic model for request data
 V Make service that works with Users
 V Make other endpoints
 V Make Pagination
-_ Goals Endpoint
+V Goals Endpoint
 _ Endpoint for getting goals by user
 _ Timetracking Endpoints
 
