@@ -29,6 +29,14 @@ class UserService:
                 return None
             return dataclasses.User(**user[0].__dict__)
 
+    async def get_goals_by_user_id(self, user_id: uuid.UUID) -> list[dataclasses.Goal]:
+        """Return Goals by User from database"""
+        async with get_session(self.engine) as session:
+            result = await session.execute(select(models.Goal).where(models.Goal.user_id == user_id))
+            all_goals = result.scalars().all()
+
+            return [dataclasses.Goal(**goal.__dict__) for goal in all_goals]
+
     async def add_user(self, data: dataclasses.UserIn) -> dataclasses.User | None:
         """
         Add new User to database.

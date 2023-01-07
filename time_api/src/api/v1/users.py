@@ -25,13 +25,25 @@ async def get_all_users(users_service: UserService = Depends()):
 
 
 @router.get("/{user_id}", response_model=dataclasses.User, summary="Get User by ID",
-            status_code=HTTPStatus.OK, tags=["users"], response_description="User by concrete id")
+            status_code=HTTPStatus.OK, tags=["users"], response_description="User by specific id")
 async def get_user_by_id(user_id: UUID, users_service: UserService = Depends()):
     """Return Single User by id"""
     user = await users_service.get_user_by_id(user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User is not found")
     return user
+
+
+@router.get("/{user_id}/goals", response_model=Page[dataclasses.Goal], summary="Get Goals by specific User",
+            status_code=HTTPStatus.OK, tags=["users"], response_description="Goals by specific User Id")
+async def get_goals_by_user_id(user_id: UUID, users_service: UserService = Depends()):
+    """Return Goals by User id"""
+    user = await users_service.get_user_by_id(user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User is not found")
+    goals = await users_service.get_goals_by_user_id(user_id)
+
+    return paginate(goals)
 
 
 @router.post("/", summary="Add New User", status_code=HTTPStatus.CREATED, tags=["users"])
