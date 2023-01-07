@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi_pagination import add_pagination
 import uvicorn
 
 from src.api.v1 import users
@@ -9,6 +10,7 @@ app = FastAPI(
     docs_url='/api/openapi',
     openapi_url='/api/openapi.json',
 )
+add_pagination(app)
 
 app.include_router(users.router, prefix=f"{settings.timeapi.path}/users", tags=["users"])
 

@@ -2,6 +2,7 @@ from http import HTTPStatus
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi_pagination import Page, paginate
 
 from src.models import dataclasses
 from src.services.users import UserService
@@ -12,7 +13,7 @@ router = APIRouter()
 
 @router.get(
     "/",
-    response_model=list[dataclasses.User],
+    response_model=Page[dataclasses.User],
     summary="Get All Users",
     status_code=HTTPStatus.OK,
     tags=["users"],
@@ -20,7 +21,7 @@ router = APIRouter()
 async def get_all_users(users_service: UserService = Depends()):
     """Return all Users in database"""
     users = await users_service.get_all()
-    return users
+    return paginate(users)
 
 
 @router.get("/{user_id}", response_model=dataclasses.User, summary="Get User by ID",
